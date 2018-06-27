@@ -10,19 +10,19 @@
   export default {
     name: 'line-number-indicator',
     props: ['lineNumber'],
-    data () {
-      return {}
-    },
     mounted() {
       const el = this.$el;
       el.style.width = el.clientHeight + 'px';
 
       window.addEventListener('resize', function() {
+
         el.style.width = el.clientHeight + 'px';
       });
     },
     beforeDestroy() {
-      window.removeEventListener('resize');
+      window.removeEventListener('resize', function() {
+        el.style.width = el.clientHeight + 'px';
+      });
     }
   }
 </script>

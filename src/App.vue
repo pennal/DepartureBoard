@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <entries-list v-if="location !== null"></entries-list>
-    <time-keeper v-if="location !== null"></time-keeper>
+    <entries-list v-if="$store.state.location !== null"></entries-list>
+    <time-keeper v-if="$store.state.location !== null"></time-keeper>
 
 
     <station-chooser v-else></station-chooser>
-
   </div>
 </template>
 
@@ -21,15 +20,14 @@ export default {
     EntriesList,
     TimeKeeper
   },
-  data() {
-    return {
-      location: null
-    };
-  },
   mounted() {
-    this.location = localStorage.getItem('location');
+    let retrievedLocation = localStorage.getItem('location');
 
-    console.log(this.location == null )
+    console.log(this.$store.state.location);
+
+    if (retrievedLocation !== null) {
+      this.$store.commit('setLocation', retrievedLocation);
+    }
   }
 }
 </script>

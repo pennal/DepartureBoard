@@ -10,9 +10,6 @@
   export default {
     name: 'time-left-indicator',
     props: ['timeLeft'],
-    data () {
-      return {}
-    },
     mounted() {
       const el = this.$el;
       el.style.width = el.clientHeight + 'px';
@@ -23,7 +20,9 @@
       });
     },
     beforeDestroy() {
-      window.removeEventListener('resize');
+      window.removeEventListener('resize', function() {
+        el.style.width = el.clientHeight + 'px';
+      });
     }
   }
 </script>

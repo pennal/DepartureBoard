@@ -32,12 +32,12 @@
       getData(obj){
         const stationName = obj.name;
 
-        console.log(stationName);
-
         localStorage.setItem('location', stationName);
+        this.$store.commit('setLocation', stationName);
+
+
       },
       process(data) {
-
         return JSON.parse(JSON.stringify(data["stations"]));
       },
       renderChild(data) {

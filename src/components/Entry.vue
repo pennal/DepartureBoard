@@ -19,7 +19,7 @@
         </div>
       </div>
 
-      <time-left-indicator v-bind:timeLeft="this.data.departure.timeLeft"></time-left-indicator>
+      <time-left-indicator v-bind:timeLeft="data.departure.timeLeft"></time-left-indicator>
 
     </div>
   </div>
@@ -82,7 +82,17 @@
 
         let delta = leaveDate - now;
 
-        this.data.departure.timeLeft = Math.floor((delta/1000)/60);
+        let timeLeft = Math.floor((delta/1000)/60);
+
+        this.data.departure.timeLeft = timeLeft;
+
+        console.log(JSON.stringify(this.data));
+
+        if (timeLeft <= 0) {
+          console.log("Need to remove entry " + JSON.stringify(this.data));
+          this.$store.commit('removeEntry', this.data);
+        }
+
       },
       getColorForLine() {
         const lineNumber = parseInt(this.data.lineNumber);

@@ -1,14 +1,11 @@
 <template>
   <div class="entries">
 
-    <div class="loading-placeholder d-flex" v-if="entries.length === 0">
+    <div class="loading-placeholder d-flex" v-if="$store.getters.getEntries === null || $store.getters.getEntries.length === 0">
       <h1 class="align-self-center justify-content-center" style="width: 100%;">Loading entries...</h1>
     </div>
 
-
-    <entry v-else v-for="entry in entries" v-bind:data="entry" :key="entry.id"></entry>
-
-
+    <entry v-else v-for="entry in $store.getters.getEntries" v-bind:data="entry" :key="entry.id"></entry>
   </div>
 </template>
 
@@ -19,11 +16,6 @@ import axios from 'axios';
 export default {
   components: {Entry},
   name: 'entries-list',
-  data() {
-    return {
-      entries: [],
-    }
-  },
 
   mounted() {
     this.fetchStationboard();
@@ -55,7 +47,7 @@ export default {
 
 
 
-        this.entries = [];
+        let entries = [];
 
         for (let i = 0; i < stationboard.length; i++) {
           let current = {
@@ -70,9 +62,9 @@ export default {
             delay: stationboard[i].stop.delay
           };
 
-          console.log(current.delay);
+          entries.push(current);
 
-          this.entries.push(current);
+          this.$store.commit('setEntries', entries);
         }
 
       })
