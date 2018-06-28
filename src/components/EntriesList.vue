@@ -1,12 +1,13 @@
 <template>
   <div class="entries">
-    <transition-group name="fade" mode="out-in">
+    <transition-group  name="list-complete" :duration="1000">
+      <!--name="fade" mode="out-in"-->
 
     <div class="loading-placeholder d-flex" v-if="$store.getters.getEntries === null || $store.getters.getEntries.length === 0" :key="1">
       <h1 class="align-self-center justify-content-center" style="width: 100%;">Loading entries...</h1>
     </div>
 
-    <entry v-else v-for="entry in $store.getters.getEntries" v-bind:data="entry" :key="entry.id"></entry>
+    <entry v-else v-for="(entry, index) in $store.getters.getEntries" v-bind:index="index" :key="entry.id"></entry>
 
     </transition-group>
   </div>
@@ -35,8 +36,8 @@ export default {
 
       console.log("Fetching latest data");
 
-
-      let station = encodeURI(localStorage.getItem('location'));
+      let location = localStorage.getItem('location');
+      let station = encodeURI(location);
 
 
       axios.get("http://transport.opendata.ch/v1/stationboard?station=" + station + "&limit=15")
@@ -45,9 +46,9 @@ export default {
         let stationboard = response.data.stationboard;
 
         if (stationboard.length === 0) {
-          console.error("Location \"" + station + "\" is invalid! Exit!");
+          console.error("Location \"" + location + "\" is invalid! Exit!");
 
-          alert("Location \"" + station + "\" is invalid! You will now be redirected to the home page");
+          alert("Location \"" + location + "\" is invalid! You will now be redirected to the home page");
 
           localStorage.removeItem("location");
           this.$store.commit('setLocation', null);
@@ -55,9 +56,13 @@ export default {
         }
 
         this.$store.commit('addEntries', stationboard);
-
       })
       .catch(e => {
+        this.$notify({
+          group: 'foo',
+          title: 'Error while fetching data',
+          text: e,
+        });
         console.log(e);
       })
     }
@@ -78,6 +83,5 @@ export default {
     height: 88vh;
     overflow: hidden;
   }
-
 
 </style>

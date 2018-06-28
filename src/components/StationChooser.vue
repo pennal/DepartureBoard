@@ -1,21 +1,32 @@
 <template>
   <div class="station-chooser">
-    <div class="row">
-      <div class="col-md-8 offset-md-2">
-        <div class="align-self-center">
-        <h1 class="text-center">Type the station name:</h1>
+    <div class="row h-100">
+      <div class="col-sm-8 offset-2 my-auto">
+        <h1 class="text-center" style="font-size: 6em">DepartureBoard</h1>
         <autocomplete
           url="http://transport.opendata.ch/v1/locations"
           param="query"
           anchor="name"
+          placeholder="Type the name of the station"
           :on-select="getData"
           :process="process"
           :onShouldRenderChild="renderChild"
-        className="inputField">
-        </autocomplete>
-        </div>
+          className="inputField"/>
+        <h6 class="text-center" style="padding-top: 20px;"><font-awesome-icon icon="exclamation-triangle"/>  Only Swiss stations are supported  <font-awesome-icon icon="exclamation-triangle"/></h6>
+        <div style="height: 15vh"></div>
       </div>
     </div>
+    <div class="myFooter">
+      <div class="row">
+        <div class="col-md-12">
+          <div style="width: 100%" class="text-center">
+            <a style="font-size: 2em; color: white;" href="https://github.com/pennal/DepartureBoard"><font-awesome-icon icon="code"/></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </template>
 
@@ -56,9 +67,10 @@
     font-size: 20px;
   }
 
+  .myFooter {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 
-
-
-
-
+  }
 </style>

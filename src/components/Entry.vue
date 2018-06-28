@@ -15,17 +15,17 @@
               <font-awesome-icon icon="subway" v-if="data.category === 'T'"/>
               <font-awesome-icon icon="bus" v-if="data.category === 'BUS' || data.category === 'NFB'"/>
               <font-awesome-icon icon="train" v-if="data.category === 'S' || data.category === 'IC'"/>
-             {{data.type}}
+              {{data.type}} <span v-if="data.departure.platform !== null">- Platform {{data.departure.platform}}</span>
             </p>
           </div>
 
-          <div v-if="data.delay !== null" class="detail" style="height: 30%">
+          <div v-if="data.delay !== null"  class="detail" style="height: 30%">
             <p style="color: red; font-size: 5vh">Delay: {{data.delay}}</p>
           </div>
         </div>
       </div>
 
-      <time-left-indicator v-bind:timeLeft="data.departure.timeLeft"></time-left-indicator>
+      <time-left-indicator v-bind:timeLeft="data.departure.timeLeft" v-bind:style="{ backgroundColor: this.getColorForTimeLeft() }"></time-left-indicator>
 
     </div>
   </div>
@@ -43,7 +43,12 @@
       TimeLeftIndicator,
       LineNumberIndicator
     },
-    props: ['data'],
+    props: ['index'],
+    data() {
+      return {
+        data: this.$store.getters.getEntries[this.index]
+      }
+    },
     mounted() {
       this.calculateTimeLeft();
       // My god this is awful...
@@ -56,7 +61,7 @@
       });
 
 
-      this.$options.interval = setInterval(this.calculateTimeLeft, 10000);
+      this.$options.interval = setInterval(this.calculateTimeLeft, 2000);
     },
     beforeDestroy () {
       clearInterval(this.$options.interval);
@@ -87,6 +92,9 @@
         let timeLeft = Math.floor((delta/1000)/60);
 
         this.data.departure.timeLeft = timeLeft;
+
+        this.$store.commit('updateEntry', this.data);
+        console.log("Entry " + this.data.id + " => " + this.data.departure.timeLeft);
 
         if (timeLeft <= 0) {
           console.log("Need to remove entry " + this.data.id);
@@ -125,6 +133,17 @@
         }
 
         return color;
+      },
+      getColorForTimeLeft() {
+        const timeLeft = parseInt(this.data.departure.timeLeft);
+
+        if (timeLeft <= 1) {
+          return "#CC0605"
+        } else if (timeLeft <= 2) {
+          return "#FFBE00"
+        } else {
+          return "#46BF00"
+        }
       }
     }
   }

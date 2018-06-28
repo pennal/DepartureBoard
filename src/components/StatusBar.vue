@@ -14,6 +14,8 @@
     methods: {
 
       changeStation(event) {
+        event.preventDefault();
+
         localStorage.removeItem("location");
         this.$store.commit('setLocation', null);
         this.$store.commit('setEntries', null);

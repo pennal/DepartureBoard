@@ -9,6 +9,15 @@ const state = {
 };
 
 const mutations = {
+  updateEntry(state, entry) {
+    for (let i = 0; i < state.entries.length; i++) {
+      if (state.entries[i].id === entry.id) {
+        console.log("[STORE] - Updating entry with id " + entry.id);
+        state.entries[i] = entry;
+        break;
+      }
+    }
+  },
   setLocation(state, location) {
     state.location = location;
   },
@@ -32,7 +41,8 @@ const mutations = {
         lineNumber: entries[i].number,
         departure: {
           time: entries[i].stop.departureTimestamp,
-          platform: entries[i].stop.platform
+          platform: entries[i].stop.platform,
+          timeLeft: 0
         },
         type: entries[i].name,
         category: entries[i].category,

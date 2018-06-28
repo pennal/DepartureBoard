@@ -1,7 +1,7 @@
 <template>
   <div class="circle">
     <div class="time-left">
-      <p>{{timeLeft}}'</p>
+      <p style="">{{timeLeft}}'</p>
     </div>
   </div>
 </template>
