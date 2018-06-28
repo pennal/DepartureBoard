@@ -175,6 +175,4 @@
     font-size: 10vh;
     margin-bottom: 0;
   }
-
-
 </style>
