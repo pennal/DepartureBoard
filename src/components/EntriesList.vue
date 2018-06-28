@@ -1,11 +1,14 @@
 <template>
   <div class="entries">
+    <transition-group name="fade" mode="out-in">
 
-    <div class="loading-placeholder d-flex" v-if="$store.getters.getEntries === null || $store.getters.getEntries.length === 0">
+    <div class="loading-placeholder d-flex" v-if="$store.getters.getEntries === null || $store.getters.getEntries.length === 0" :key="1">
       <h1 class="align-self-center justify-content-center" style="width: 100%;">Loading entries...</h1>
     </div>
 
     <entry v-else v-for="entry in $store.getters.getEntries" v-bind:data="entry" :key="entry.id"></entry>
+
+    </transition-group>
   </div>
 </template>
 
@@ -36,36 +39,22 @@ export default {
       let station = encodeURI(localStorage.getItem('location'));
 
 
-      axios.get("http://transport.opendata.ch/v1/stationboard?station=" + station + "&limit=10")
+      axios.get("http://transport.opendata.ch/v1/stationboard?station=" + station + "&limit=15")
       .then(response => {
         // JSON responses are automatically parsed.
         let stationboard = response.data.stationboard;
 
         if (stationboard.length === 0) {
           console.error("Location \"" + station + "\" is invalid! Exit!");
+
+          alert("Location \"" + station + "\" is invalid! You will now be redirected to the home page");
+
+          localStorage.removeItem("location");
+          this.$store.commit('setLocation', null);
+          this.$store.commit('setEntries', null);
         }
 
-
-
-        let entries = [];
-
-        for (let i = 0; i < stationboard.length; i++) {
-          let current = {
-            id: stationboard[i].name.replace(" ", "_"),
-            title: stationboard[i].to,
-            lineNumber: stationboard[i].number,
-            departure : {
-              time: stationboard[i].stop.departureTimestamp,
-              platform: stationboard[i].stop.platform
-            },
-            type: stationboard[i].name,
-            delay: stationboard[i].stop.delay
-          };
-
-          entries.push(current);
-
-          this.$store.commit('setEntries', entries);
-        }
+        this.$store.commit('addEntries', stationboard);
 
       })
       .catch(e => {
@@ -86,7 +75,7 @@ export default {
   }
 
   .entries {
-    height: 92vh;
+    height: 88vh;
     overflow: hidden;
   }
 

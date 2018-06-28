@@ -4,7 +4,7 @@
       <div class="col-md-5">
         <p style="text-align: left">{{day}}/{{month}}/{{year}}</p>
       </div>
-      <div class="col-md-2 text-center"">
+      <div class="col-md-2 text-center">
         <b-button v-on:click="changeStation">Change station</b-button>
       </div>
       <div class="col-md-5">
@@ -51,6 +51,7 @@
       changeStation(event) {
         localStorage.removeItem("location");
         this.$store.commit('setLocation', null);
+        this.$store.commit('setEntries', null);
       }
     }
   }

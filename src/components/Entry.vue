@@ -10,7 +10,13 @@
           </div>
 
           <div class="detail" style="height: 20%">
-            <p style="font-size: 3vh;">{{data.type}}</p>
+
+            <p style="font-size: 3vh;">
+              <font-awesome-icon icon="subway" v-if="data.category === 'T'"/>
+              <font-awesome-icon icon="bus" v-if="data.category === 'BUS' || data.category === 'NFB'"/>
+              <font-awesome-icon icon="train" v-if="data.category === 'S' || data.category === 'IC'"/>
+             {{data.type}}
+            </p>
           </div>
 
           <div v-if="data.delay !== null" class="detail" style="height: 30%">
@@ -40,10 +46,6 @@
     props: ['data'],
     mounted() {
       this.calculateTimeLeft();
-
-
-
-
       // My god this is awful...
       const that = this;
 
@@ -86,13 +88,10 @@
 
         this.data.departure.timeLeft = timeLeft;
 
-        console.log(JSON.stringify(this.data));
-
         if (timeLeft <= 0) {
-          console.log("Need to remove entry " + JSON.stringify(this.data));
+          console.log("Need to remove entry " + this.data.id);
           this.$store.commit('removeEntry', this.data);
         }
-
       },
       getColorForLine() {
         const lineNumber = parseInt(this.data.lineNumber);
@@ -134,7 +133,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .entry {
-    height: 23vh;
+    height: 22vh;
     width: 100%;
     /*background-color: red;*/
     padding: 10px;

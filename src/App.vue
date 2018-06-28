@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <status-bar v-if="$store.state.location !== null"></status-bar>
     <entries-list v-if="$store.state.location !== null"></entries-list>
     <time-keeper v-if="$store.state.location !== null"></time-keeper>
 
@@ -9,6 +10,7 @@
 </template>
 
 <script>
+  import StatusBar from './components/StatusBar'
 import EntriesList from './components/EntriesList'
 import TimeKeeper from './components/TimeKeeper'
 import StationChooser from "./components/StationChooser";
@@ -16,14 +18,13 @@ import StationChooser from "./components/StationChooser";
 export default {
   name: 'app',
   components: {
+    StatusBar,
     StationChooser,
     EntriesList,
     TimeKeeper
   },
   mounted() {
     let retrievedLocation = localStorage.getItem('location');
-
-    console.log(this.$store.state.location);
 
     if (retrievedLocation !== null) {
       this.$store.commit('setLocation', retrievedLocation);
