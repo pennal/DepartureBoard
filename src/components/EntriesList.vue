@@ -1,7 +1,6 @@
 <template>
   <div class="entries">
-    <transition-group  name="list-complete" :duration="1000">
-      <!--name="fade" mode="out-in"-->
+    <transition-group  name="fade" mode="out-in" tag="span" :duration="500">
 
     <div class="loading-placeholder d-flex" v-if="$store.getters.getEntries === null || $store.getters.getEntries.length === 0" :key="1">
       <h1 class="align-self-center justify-content-center" style="width: 100%;">Loading entries...</h1>
@@ -59,7 +58,7 @@ export default {
       })
       .catch(e => {
         this.$notify({
-          group: 'foo',
+          group: 'connection-error',
           title: 'Error while fetching data',
           text: e,
         });

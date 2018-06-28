@@ -1,7 +1,7 @@
 <template>
   <div class="circle">
     <div class="time-left">
-      <p style=""><span style="visibility: hidden">'</span>{{timeLeft}}'</p>
+      <p style=""><span v-if="(timeLeft + '\'').length % 2 !== 1" style="visibility: hidden">'</span>{{timeLeft}}'</p>
     </div>
   </div>
 </template>
@@ -49,5 +49,26 @@
     transform: translateY(-50%);
     font-size: 10vh;
     margin-bottom: 0;
+  }
+
+  .green {
+    background-color: #46BF00;
+    -webkit-transition: background-color 500ms linear;
+    -ms-transition: background-color 500ms linear;
+    transition: background-color 500ms linear;
+  }
+
+  .yellow {
+    background-color: #FFBE00;
+    -webkit-transition: background-color 500ms linear;
+    -ms-transition: background-color 500ms linear;
+    transition: background-color 500ms linear;
+  }
+
+  .red {
+    background-color: #CC0605;
+    -webkit-transition: background-color 500ms linear;
+    -ms-transition: background-color 500ms linear;
+    transition: background-color 500ms linear;
   }
 </style>

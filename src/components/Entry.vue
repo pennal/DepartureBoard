@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <time-left-indicator v-bind:timeLeft="data.departure.timeLeft" v-bind:style="{ backgroundColor: this.getColorForTimeLeft() }"></time-left-indicator>
+      <time-left-indicator v-bind:timeLeft="data.departure.timeLeft" v-bind:class="getColorForTimeLeft()"></time-left-indicator>
 
     </div>
   </div>
@@ -138,11 +138,11 @@
         const timeLeft = parseInt(this.data.departure.timeLeft);
 
         if (timeLeft <= 1) {
-          return "#CC0605"
+          return "red"
         } else if (timeLeft <= 2) {
-          return "#FFBE00"
+          return "yellow"
         } else {
-          return "#46BF00"
+          return "green"
         }
       }
     }

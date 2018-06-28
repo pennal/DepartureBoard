@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <notifications group="foo" position="top center"/>
+    <notifications group="connection-error" position="top center"/>
 
     <status-bar v-if="$store.state.location !== null"></status-bar>
     <entries-list v-if="$store.state.location !== null"></entries-list>
@@ -36,8 +36,9 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-family: 'Helvetica Neue UltraLight', sans-serif;
+  /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
+  /*-webkit-font-smoothing: antialiased;*/
   -moz-osx-font-smoothing: grayscale;
   background-color: #1A1C19;
   color: white;
