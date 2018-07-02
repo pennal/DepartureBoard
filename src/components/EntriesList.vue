@@ -39,7 +39,7 @@ export default {
       let station = encodeURI(location);
 
 
-      axios.get("http://transport.opendata.ch/v1/stationboard?station=" + station + "&limit=15")
+      axios.get("https://transport.opendata.ch/v1/stationboard?station=" + station + "&limit=15")
       .then(response => {
         // JSON responses are automatically parsed.
         let stationboard = response.data.stationboard;
@@ -60,9 +60,9 @@ export default {
         this.$notify({
           group: 'connection-error',
           title: 'Error while fetching data',
-          text: e,
+          text: e.message,
         });
-        console.log(e);
+        console.log(e.message);
       })
     }
   }

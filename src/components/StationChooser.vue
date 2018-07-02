@@ -4,7 +4,7 @@
       <div class="col-sm-6 offset-3 my-auto">
         <h1 class="text-center" style="font-size: 6em">DepartureBoard</h1>
         <autocomplete
-          url="http://transport.opendata.ch/v1/locations"
+          url="https://transport.opendata.ch/v1/locations"
           param="query"
           anchor="name"
           placeholder="Type the name of the station"

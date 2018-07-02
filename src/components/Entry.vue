@@ -20,7 +20,7 @@
           </div>
 
           <div v-if="data.delay !== null"  class="detail" style="height: 30%">
-            <p style="color: red; font-size: 5vh">Delay: {{data.delay}}</p>
+            <p style="color: red; font-size: 5vh">Delay: About {{data.delay}} minutes</p>
           </div>
         </div>
       </div>
