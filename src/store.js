@@ -12,7 +12,7 @@ const mutations = {
   updateEntry(state, entry) {
     for (let i = 0; i < state.entries.length; i++) {
       if (state.entries[i].id === entry.id) {
-        console.log("[STORE] - Updating entry with id " + entry.id);
+        console.debug("[STORE] - Updating entry with id " + entry.id);
         state.entries[i] = entry;
         break;
       }
@@ -81,7 +81,7 @@ const mutations = {
       }
 
       for (let i = 0; i < tempNewEntries.length; i++) {
-        console.log("Adding " + JSON.stringify(tempNewEntries[i]));
+        console.debug("Adding " + JSON.stringify(tempNewEntries[i]));
         state.entries.push(tempNewEntries[i]);
       }
     }

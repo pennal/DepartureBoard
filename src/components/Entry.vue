@@ -94,10 +94,10 @@
         this.data.departure.timeLeft = timeLeft;
 
         this.$store.commit('updateEntry', this.data);
-        console.log("Entry " + this.data.id + " => " + this.data.departure.timeLeft);
+        console.debug("Entry " + this.data.id + " => " + this.data.departure.timeLeft);
 
         if (timeLeft <= 0) {
-          console.log("Need to remove entry " + this.data.id);
+          console.debug("Need to remove entry " + this.data.id);
           this.$store.commit('removeEntry', this.data);
         }
       },

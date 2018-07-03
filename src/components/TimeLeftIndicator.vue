@@ -1,7 +1,7 @@
 <template>
   <div class="circle">
     <div class="time-left">
-      <p style=""><span v-if="(timeLeft + '\'').length % 2 !== 1" style="visibility: hidden">'</span>{{timeLeft}}'</p>
+      <p style=""><span v-if="this.formatTime().length % 2 !== 1" style="visibility: hidden">'</span>{{formatTime(timeLeft)}}</p>
     </div>
   </div>
 </template>
@@ -23,6 +23,14 @@
       window.removeEventListener('resize', function() {
         el.style.width = el.clientHeight + 'px';
       });
+    },
+    methods: {
+      formatTime() {
+        if (this.timeLeft >= 60) {
+          return Math.floor(this.timeLeft / 60) + 'h+';
+        }
+        return this.timeLeft + "'";
+      }
     }
   }
 </script>
