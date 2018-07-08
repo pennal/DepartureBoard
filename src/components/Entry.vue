@@ -89,7 +89,7 @@
 
         let delta = leaveDate - now;
 
-        let timeLeft = Math.floor((delta/1000)/60);
+        let timeLeft = Math.floor(((delta/1000).toFixed(2)/60).toFixed(2));
 
         this.data.departure.timeLeft = timeLeft;
 
