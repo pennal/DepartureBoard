@@ -33,7 +33,7 @@ export default {
   methods: {
     fetchStationboard() {
 
-      console.log("Fetching latest data");
+      console.log("Fetching latest data...");
 
       let location = localStorage.getItem('location');
       let station = encodeURI(location);
@@ -55,6 +55,7 @@ export default {
         }
 
         this.$store.commit('addEntries', stationboard);
+        console.log("Data fetched successfully");
       })
       .catch(e => {
         this.$notify({
@@ -62,6 +63,7 @@ export default {
           title: 'Error while fetching data',
           text: e.message,
         });
+        console.log("ERROR WHILE FETCHING DATA!")
         console.log(e.message);
       })
     }

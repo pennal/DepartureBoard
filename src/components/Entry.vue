@@ -50,7 +50,9 @@
       }
     },
     mounted() {
-      this.calculateTimeLeft();
+      // Setup the recurring timer
+      this.setupTimer();
+
       // My god this is awful...
       const that = this;
 
@@ -59,9 +61,6 @@
       window.addEventListener('resize', function() {
         that.calculateMiddleSectionWidth(el);
       });
-
-
-      this.$options.interval = setInterval(this.calculateTimeLeft, 2000);
     },
     beforeDestroy () {
       clearInterval(this.$options.interval);
@@ -80,7 +79,35 @@
 
         mainContent.style.width = centerWidth + 'px';
       },
+      setupTimer() {
+        // We need to call a first update, otherwise the time left will show 0!
+        this.calculateTimeLeft();
 
+        // We want to set the updater to run at exactly XX:XX:00 (or 01)
+        // Create a ref hour for when the first update should be made
+        let zeroDate = new Date();
+        zeroDate.setTime(zeroDate.getTime() + 1000 * 60);
+        zeroDate.setSeconds(0);
+
+        // Get the current time
+        let currentTime = new Date();
+        // Calculate the Delta (and add a bit of a breather)
+        let timerDelta = (zeroDate - currentTime) + 100;
+
+        // How nice...
+        const that = this;
+
+        setTimeout(function() {
+            // Run the first update for the time
+            that.calculateTimeLeft()
+            // Set the recurring timer. 
+            // - In theory this can be done only once every 60 seconds
+            // - In practice, no idea...the time might drift
+            that.$options.interval = setInterval(that.calculateTimeLeft, 60000);
+        }, timerDelta);
+        
+
+      },
 
       calculateTimeLeft() {
         let leaveDate = new Date(this.data.departure.time * 1000);
